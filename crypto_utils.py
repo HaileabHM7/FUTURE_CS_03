@@ -1,21 +1,17 @@
 import os
 import hashlib
 
-# Try this first
 try:
     from Crypto.Cipher import AES
 except ImportError:
     from Cryptodome.Cipher import AES
 
-# Get the passphrase from environment variable
 passphrase = os.environ.get("AES_PASSPHRASE")
 
 if passphrase is None:
-    # Prompt for passphrase if not in environment
     passphrase = input("Enter encryption passphrase: ")
 
-# Hash the passphrase to get a 32-byte key
-KEY = hashlib.sha256(passphrase.encode()).digest()  # Always 32 bytes
+KEY = hashlib.sha256(passphrase.encode()).digest()  
 
 def encrypt_file(data):
     cipher = AES.new(KEY, AES.MODE_GCM)
